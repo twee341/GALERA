@@ -38,7 +38,7 @@ cap: dict = {
 }
 
 # define device name
-device_name = "BA MINI 047"
+device_name = "BA HALO 089 at DESKTOP-3OMH0CD"
 
 # start EEG acquisition setup
 with EEGManager() as mgr:
