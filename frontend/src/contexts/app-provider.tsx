@@ -3,7 +3,6 @@ import { createContext, useContext, useState, ReactNode, Dispatch, SetStateActio
 
 export type Settings = {
   threshold: number;
-  audioAlerts: boolean;
   visualAlerts: boolean;
 };
 
@@ -19,15 +18,14 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<Settings>({
     threshold: 40,
-    audioAlerts: true,
     visualAlerts: true,
   });
   const [isSessionActive, setIsSessionActive] = useState(false);
 
   return (
-    <AppContext.Provider value={{ settings, setSettings, isSessionActive, setIsSessionActive }}>
-      {children}
-    </AppContext.Provider>
+      <AppContext.Provider value={{ settings, setSettings, isSessionActive, setIsSessionActive }}>
+        {children}
+      </AppContext.Provider>
   );
 }
 

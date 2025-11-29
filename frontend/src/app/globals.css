@@ -26,7 +26,7 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 220 40% 5%; /* Deep space blue */
+    --background: 220 40% 5%;
     --foreground: 0 0% 98%;
 
     --card: 220 20% 10%;
@@ -35,7 +35,7 @@
     --popover: 220 15% 5%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 180 100% 50%; /* Neon Cyan */
+    --primary: 180 100% 50%;
     --primary-foreground: 180 100% 10%;
 
     --secondary: 220 15% 15%;
@@ -44,7 +44,7 @@
     --muted: 220 15% 15%;
     --muted-foreground: 0 0% 63.9%;
 
-    --accent: 283 60% 64%; /* Neon Purple */
+    --accent: 283 60% 64%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 72% 51%;
@@ -96,7 +96,7 @@
     height: 30vw;
     min-width: 300px;
     min-height: 300px;
-top: 5vh;
+    top: 5vh;
     left: 10vw;
     animation: move-orb-1 25s infinite alternate ease-in-out;
   }

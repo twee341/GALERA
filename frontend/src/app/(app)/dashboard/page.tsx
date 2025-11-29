@@ -8,15 +8,19 @@ import { useToast } from '@/hooks/use-toast';
 import { Zap, ZapOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+type AttentionDataPoint = {
+    time: number;
+    value: number | null;
+};
+
 export default function DashboardPage() {
     const { settings, isSessionActive, setIsSessionActive } = useAppContext();
     const [attentionScore, setAttentionScore] = useState(75);
-    const [attentionData, setAttentionData] = useState(() => Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
+    const [attentionData, setAttentionData] = useState<AttentionDataPoint[]>(() => Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
     const { toast } = useToast();
     const [isHeadsetConnected, setIsHeadsetConnected] = useState(false);
 
     useEffect(() => {
-        // Mock headset connection status
         const timeout = setTimeout(() => setIsHeadsetConnected(true), 2000);
         return () => clearTimeout(timeout);
     }, []);
@@ -29,27 +33,18 @@ export default function DashboardPage() {
                 description: `Attention score is below your threshold of ${settings.threshold}.`,
             });
         }
-        // Audio alert logic could be triggered here
-        if(settings.audioAlerts) {
-            // new Audio('/path/to/alert.mp3').play();
-        }
-    }, [settings, toast]);
+    }, [settings.visualAlerts, settings.threshold, toast]);
 
     useEffect(() => {
-        let interval;
+        let interval: NodeJS.Timeout | undefined = undefined;
         if (isSessionActive) {
-            // Reset data on session start
             setAttentionData(Array.from({ length: 30 }, (_, i) => ({ time: i, value: 75 })));
             setAttentionScore(75);
 
             interval = setInterval(() => {
                 setAttentionScore(prevScore => {
-                    const change = Math.random() * 12 - 6; // Fluctuate
+                    const change = Math.random() * 12 - 6;
                     const newScore = Math.max(0, Math.min(100, prevScore + change));
-                    
-                    if (newScore < settings.threshold) {
-                        showFocusAlert();
-                    }
 
                     setAttentionData(prevData => {
                         const newData = [...prevData.slice(1), { time: prevData[prevData.length -1].time + 1, value: newScore }];
@@ -60,11 +55,18 @@ export default function DashboardPage() {
                 });
             }, 1000);
         } else {
-            // Clear data visualization on session end
             setAttentionData(Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
         }
         return () => clearInterval(interval);
-    }, [isSessionActive, settings.threshold, showFocusAlert]);
+    }, [isSessionActive]);
+
+
+    useEffect(() => {
+        if (isSessionActive && attentionScore < settings.threshold) {
+            showFocusAlert();
+        }
+    }, [attentionScore, isSessionActive, settings.threshold, showFocusAlert]);
+
 
     const isWarning = isSessionActive && attentionScore < settings.threshold;
 
@@ -101,13 +103,13 @@ export default function DashboardPage() {
                     <CardContent className="flex flex-col items-center justify-center gap-6">
                         <div className={cn(
                             "text-7xl font-black text-primary drop-shadow-glow-primary transition-colors",
-                             isWarning && "text-destructive dropshadow-glow-destructive"
+                            isWarning && "text-destructive dropshadow-glow-destructive"
                         )}>
                             {isSessionActive ? Math.round(attentionScore) : '-'}
                         </div>
-                        <Button 
-                            size="lg" 
-                            className="w-full text-xl h-16 font-bold" 
+                        <Button
+                            size="lg"
+                            className="w-full text-xl h-16 font-bold"
                             onClick={() => setIsSessionActive(prev => !prev)}
                             variant={isSessionActive ? 'destructive' : 'default'}
                             disabled={!isHeadsetConnected}
