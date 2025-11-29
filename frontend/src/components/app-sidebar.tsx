@@ -35,9 +35,6 @@ export function AppSidebar() {
             <SidebarHeader className="h-16 flex items-center justify-between">
                 <div className="flex items-center gap-2 overflow-hidden">
                     <BrainCircuit className="h-10 w-10 shrink-0 text-primary drop-shadow-glow-primary" />
-                    <span className="font-headline text-2xl font-bold text-primary drop-shadow-glow-primary">
-                        NeuroFocus
-                    </span>
                 </div>
                 <SidebarTrigger asChild>
                     <Button variant="ghost" size="icon" className="md:hidden">
@@ -55,7 +52,7 @@ export function AppSidebar() {
                                 tooltip={{ children: item.label, side: 'right', align: 'center' }}
                             >
                                 <Link href={item.href}>
-                                    <item.icon className="shrink-0" />
+                                    <item.icon className="shrink-0" style={{width: "2rem", height: "1.3rem"}} />
                                     <span>{item.label}</span>
                                 </Link>
                             </SidebarMenuButton>
