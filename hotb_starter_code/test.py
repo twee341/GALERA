@@ -61,7 +61,7 @@ with EEGManager() as mgr:
 
     start_time = time.time()
     annotation = 1
-    while time.time() - start_time < 5:
+    while time.time() - start_time < 180:
         time.sleep(1)
         # send annotation to the device
         print(f"Sending annotation {annotation} to the device")
@@ -86,7 +86,7 @@ data, times = mne_raw.get_data(return_times=True)
 print(f"Data shape: {data.shape}")
 
 # save EEG data to MNE fif format
-eeg.data.save(f'xd.fif')
+eeg.data.save(f'uncondura.fif')
 # Close brainaccess library
 eeg.close()
 # conversion to microvolts

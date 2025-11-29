@@ -13,9 +13,8 @@ BANDS = {
     "Gamma": (30, 45) # Często ogranicza się do 45/50 Hz ze względu na szum sieci elektrycznej
 }
 
-def calculate_band_power_mne(fif_file):
+def calculate_band_power_mne(raw):
     # 1. Wczytanie pliku
-    raw = mne.io.read_raw_fif(fif_file, preload=True)
     
     # 2. Obliczenie PSD (Power Spectral Density)
     # fmax ustawiamy np. na 50 lub 100 Hz
@@ -69,7 +68,7 @@ def calculate_focus_index(df_bands):
 # PRZYKŁAD UŻYCIA (zakładając, że masz już df_bands z poprzedniego kroku):
 
 # Użycie
-df_bands = calculate_band_power_mne("dura.fif")
+df_bands = calculate_band_power_mne(mne.io.read_raw_fif("dura.fif", preload=True))
 print(df_bands)
 
 # Wizualizacja

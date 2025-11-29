@@ -66,7 +66,10 @@ with EEGManager() as mgr:
         # send annotation to the device
         print(f"Sending annotation {annotation} to the device")
         eeg.annotate(str(annotation))
-        x=sk_lvl(eeg.get_mne(tim=1))
+        mmm=eeg.get_mne(tim=1)
+        df=g.calculate_focus_index(mmm)
+        f_i=g.calculate_focus_index(df)
+        print(f_i)
         annotation += 1
 
     print("Preparing to plot data")
