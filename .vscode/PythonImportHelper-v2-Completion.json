@@ -107,6 +107,14 @@
         "documentation": {}
     },
     {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "BrainAccessException",
         "importPath": "brainaccess.utils.exceptions",
         "description": "brainaccess.utils.exceptions",
@@ -991,6 +999,15 @@
         "documentation": {}
     },
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "getcwd",
         "importPath": "os",
         "description": "os",
@@ -1052,6 +1069,188 @@
         "description": "hatchling.builders.hooks.plugin.interface",
         "isExtraImport": true,
         "detail": "hatchling.builders.hooks.plugin.interface",
+        "documentation": {}
+    },
+    {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "WebSocket",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "WebSocketDisconnect",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "JSONResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "uvicorn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uvicorn",
+        "description": "uvicorn",
+        "detail": "uvicorn",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "importPath": "db_requests",
+        "description": "db_requests",
+        "isExtraImport": true,
+        "detail": "db_requests",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "select",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "JSON",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_async_engine",
+        "importPath": "sqlalchemy.ext.asyncio",
+        "description": "sqlalchemy.ext.asyncio",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "async_sessionmaker",
+        "importPath": "sqlalchemy.ext.asyncio",
+        "description": "sqlalchemy.ext.asyncio",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "as_declarative",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Mapped",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "mapped_column",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
         "documentation": {}
     },
     {
@@ -4292,6 +4491,60 @@
         "description": "hotb_starter_code.test",
         "peekOfCode": "mne_raw = eeg.data.mne_raw\nprint(f\"MNE Raw object: {mne_raw}\")\n# Access data as NumPy arrays\ndata, times = mne_raw.get_data(return_times=True)\nprint(f\"Data shape: {data.shape}\")\n# save EEG data to MNE fif format\neeg.data.save(f'./data/{time.strftime(\"%Y%m%d_%H%M\")}-raw.fif')\n# Close brainaccess library\neeg.close()\n# conversion to microvolts",
         "detail": "hotb_starter_code.test",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend",
+        "description": "backend",
+        "peekOfCode": "app = FastAPI()\nconnected_clients: list[WebSocket] = []\nlight_observers = []\n@app.get(\"/item/\")\nasync def read_item():\n    return JSONResponse(await db.get_accidents())\n@app.post(\"/event\")\nasync def event(location_id: int, accident_type: str):\n    # check if event is an incident\n    if(location_id == -1):",
+        "detail": "backend",
+        "documentation": {}
+    },
+    {
+        "label": "light_observers",
+        "kind": 5,
+        "importPath": "backend",
+        "description": "backend",
+        "peekOfCode": "light_observers = []\n@app.get(\"/item/\")\nasync def read_item():\n    return JSONResponse(await db.get_accidents())\n@app.post(\"/event\")\nasync def event(location_id: int, accident_type: str):\n    # check if event is an incident\n    if(location_id == -1):\n        await sendMessageToClients(\n            {\"location_id\": -1, \"accident_type\": accident_type})",
+        "detail": "backend",
+        "documentation": {}
+    },
+    {
+        "label": "Database",
+        "kind": 6,
+        "importPath": "db_requests",
+        "description": "db_requests",
+        "peekOfCode": "class Database:\n    def __init__(self):\n        self.__async_engine = create_async_engine(url=DATABASE,\n                                                  # echo=True,\n                                                  )\n        self.__async_session_factory = async_sessionmaker(self.__async_engine)\n        asyncio.run(self._init_models())\n    async def _init_models(self) -> None:\n        async with self.__async_engine.begin() as conn:\n            # await conn.run_sync(Base.metadata.drop_all)",
+        "detail": "db_requests",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE",
+        "kind": 5,
+        "importPath": "db_requests",
+        "description": "db_requests",
+        "peekOfCode": "DATABASE = \"sqlite+aiosqlite:///database.db\"\nclass Database:\n    def __init__(self):\n        self.__async_engine = create_async_engine(url=DATABASE,\n                                                  # echo=True,\n                                                  )\n        self.__async_session_factory = async_sessionmaker(self.__async_engine)\n        asyncio.run(self._init_models())\n    async def _init_models(self) -> None:\n        async with self.__async_engine.begin() as conn:",
+        "detail": "db_requests",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Base:\n    pass\nclass AccidentsORM(Base):\n    __tablename__ = 'accidents'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "AccidentsORM",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class AccidentsORM(Base):\n    __tablename__ = 'accidents'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)",
+        "detail": "models",
         "documentation": {}
     }
 ]
