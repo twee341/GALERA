@@ -83,3 +83,5 @@ mne_raw.apply_function(lambda x: x*10**-6)
 # Show recorded data
 mne_raw.filter(1, 40).plot(scalings="auto", verbose=False)
 plt.show()
+
+''
