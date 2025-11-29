@@ -1072,6 +1072,24 @@
         "documentation": {}
     },
     {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "seaborn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "seaborn",
+        "description": "seaborn",
+        "detail": "seaborn",
+        "documentation": {}
+    },
+    {
         "label": "asyncio",
         "kind": 6,
         "isExtraImport": true,
@@ -4480,7 +4498,7 @@
         "kind": 5,
         "importPath": "hotb_starter_code.test",
         "description": "hotb_starter_code.test",
-        "peekOfCode": "device_name = \"BA MINI 047\"\n# start EEG acquisition setup\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=cap, sfreq=250)\n    # Start acquiring data\n    eeg.start_acquisition()\n    print(\"Acquisition started\")\n    time.sleep(3)\n    start_time = time.time()\n    annotation = 1",
+        "peekOfCode": "device_name = \"BA HALO 089 at DESKTOP-3OMH0CD\"\n# start EEG acquisition setup\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=cap, sfreq=250)\n    # Start acquiring data\n    eeg.start_acquisition()\n    print(\"Acquisition started\")\n    time.sleep(3)\n    start_time = time.time()\n    annotation = 1",
         "detail": "hotb_starter_code.test",
         "documentation": {}
     },
@@ -4534,16 +4552,25 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class Base:\n    pass\nclass AccidentsORM(Base):\n    __tablename__ = 'accidents'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)",
+        "peekOfCode": "class Base:\n    pass\nclass SessionORM(Base):\n    __tablename__ = 'sessions'\n    'saves work sessions and neural activity'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\nclass UsersORM(Base):\n    __tablename__ = 'users'\n    'saves user data'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)",
         "detail": "models",
         "documentation": {}
     },
     {
-        "label": "AccidentsORM",
+        "label": "SessionORM",
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class AccidentsORM(Base):\n    __tablename__ = 'accidents'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)",
+        "peekOfCode": "class SessionORM(Base):\n    __tablename__ = 'sessions'\n    'saves work sessions and neural activity'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\nclass UsersORM(Base):\n    __tablename__ = 'users'\n    'saves user data'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\n    username: Mapped[str] = mapped_column(unique=True)\n    password: Mapped[str]",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "UsersORM",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class UsersORM(Base):\n    __tablename__ = 'users'\n    'saves user data'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\n    username: Mapped[str] = mapped_column(unique=True)\n    password: Mapped[str]",
         "detail": "models",
         "documentation": {}
     }
