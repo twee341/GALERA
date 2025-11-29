@@ -1,3 +1,16 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "muse-headset",
+      "description": "A person wearing a Muse meditation headset.",
+      "imageUrl": "https://images.unsplash.com/photo-1758525747610-a89423707238?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx3ZWFyYWJsZSUyMHRlY2hub2xvZ3l8ZW58MHx8fHwxNzY0MzM2MzE1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wearable technology"
+    },
+    {
+      "id": "neurosity-headset",
+      "description": "The Neurosity Crown, a brain-computer interface device.",
+      "imageUrl": "https://images.unsplash.com/photo-1744324480866-1794a1bf193c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxicmFpbiUyMGludGVyZmFjZXxlbnwwfHx8fDE3NjQ0Mzk2MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "brain interface"
+    }
+  ]
 }

@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, History, Settings, BrainCircuit, LogOut } from 'lucide-react';
+import { LayoutDashboard, History, Settings, BrainCircuit, LogOut, ShoppingCart } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -28,6 +28,7 @@ export function AppSidebar() {
         { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
         { href: '/history', icon: History, label: 'History' },
         { href: '/settings', icon: Settings, label: 'Settings' },
+        { href: '/store', icon: ShoppingCart, label: 'Store' },
     ];
 
     return (
@@ -60,18 +61,6 @@ export function AppSidebar() {
                     ))}
                 </SidebarMenu>
             </SidebarContent>
-            <SidebarFooter>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild onClick={handleLogout} tooltip={{children: 'Logout', side: 'right', align: 'center'}}>
-                            <a>
-                                <LogOut className="shrink-0" />
-                                <span>Logout</span>
-                            </a>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarFooter>
         </Sidebar>
     );
 }
