@@ -23,9 +23,7 @@ async def read_item():
 
 @app.post("/event")
 async def event(location_id: int, accident_type: str):
-
-    # check if event is an incident
-    if(location_id == -1):
-        await sendMessageToClients(
-            {"location_id": -1, "accident_type": accident_type})
-        return
+    'receives ongoing data from BCI and analyzes it'
+    timestamp = datetime.datetime.now().isoformat()
+    
+    
