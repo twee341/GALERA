@@ -4516,7 +4516,7 @@
         "kind": 5,
         "importPath": "backend",
         "description": "backend",
-        "peekOfCode": "app = FastAPI()\nconnected_clients: list[WebSocket] = []\nlight_observers = []\n@app.get(\"/item/\")\nasync def read_item():\n    return JSONResponse(await db.get_accidents())\n@app.post(\"/event\")\nasync def event(location_id: int, accident_type: str):\n    # check if event is an incident\n    if(location_id == -1):",
+        "peekOfCode": "app = FastAPI()\nconnected_clients: list[WebSocket] = []\nlight_observers = []\n@app.get(\"/item/\")\nasync def read_item():\n    return JSONResponse(await db.get_accidents())\n@app.post(\"/event\")\nasync def event(location_id: int, accident_type: str):\n    'receives ongoing data from BCI and analyzes it'\n    timestamp = datetime.datetime.now().isoformat()",
         "detail": "backend",
         "documentation": {}
     },
@@ -4525,7 +4525,7 @@
         "kind": 5,
         "importPath": "backend",
         "description": "backend",
-        "peekOfCode": "light_observers = []\n@app.get(\"/item/\")\nasync def read_item():\n    return JSONResponse(await db.get_accidents())\n@app.post(\"/event\")\nasync def event(location_id: int, accident_type: str):\n    # check if event is an incident\n    if(location_id == -1):\n        await sendMessageToClients(\n            {\"location_id\": -1, \"accident_type\": accident_type})",
+        "peekOfCode": "light_observers = []\n@app.get(\"/item/\")\nasync def read_item():\n    return JSONResponse(await db.get_accidents())\n@app.post(\"/event\")\nasync def event(location_id: int, accident_type: str):\n    'receives ongoing data from BCI and analyzes it'\n    timestamp = datetime.datetime.now().isoformat()",
         "detail": "backend",
         "documentation": {}
     },
@@ -4552,7 +4552,7 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class Base:\n    pass\nclass SessionORM(Base):\n    __tablename__ = 'sessions'\n    'saves work sessions and neural activity'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\nclass UsersORM(Base):\n    __tablename__ = 'users'\n    'saves user data'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)",
+        "peekOfCode": "class Base:\n    pass\nclass SessionORM(Base):\n    __tablename__ = 'sessions'\n    'saves work sessions and neural activity'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\n    duration: Mapped[int] = mapped_column() # duration in seconds\n    neural_data: Mapped[dict] = mapped_column(JSON)\n    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))\n    user: Mapped[\"UsersORM\"] = relationship(back_populates=\"sessions\")",
         "detail": "models",
         "documentation": {}
     },
@@ -4561,7 +4561,7 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class SessionORM(Base):\n    __tablename__ = 'sessions'\n    'saves work sessions and neural activity'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\nclass UsersORM(Base):\n    __tablename__ = 'users'\n    'saves user data'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\n    username: Mapped[str] = mapped_column(unique=True)\n    password: Mapped[str]",
+        "peekOfCode": "class SessionORM(Base):\n    __tablename__ = 'sessions'\n    'saves work sessions and neural activity'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\n    duration: Mapped[int] = mapped_column() # duration in seconds\n    neural_data: Mapped[dict] = mapped_column(JSON)\n    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))\n    user: Mapped[\"UsersORM\"] = relationship(back_populates=\"sessions\")\nclass UsersORM(Base):\n    __tablename__ = 'users'",
         "detail": "models",
         "documentation": {}
     },
@@ -4570,7 +4570,7 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class UsersORM(Base):\n    __tablename__ = 'users'\n    'saves user data'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\n    username: Mapped[str] = mapped_column(unique=True)\n    password: Mapped[str]",
+        "peekOfCode": "class UsersORM(Base):\n    __tablename__ = 'users'\n    'saves user data'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\n    email: Mapped[str] = mapped_column(unique=True)\n    password: Mapped[str] = mapped_column()\n    sessions: Mapped[list[\"SessionORM\"]] = relationship(back_populates=\"user\", lazy=\"selectin\")",
         "detail": "models",
         "documentation": {}
     }
