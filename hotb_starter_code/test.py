@@ -10,6 +10,7 @@ Change Bluetooth device name
 import matplotlib.pyplot as plt
 import matplotlib
 import time
+import pandas as pd
 
 from brainaccess.utils import acquisition
 from brainaccess.core.eeg_manager import EEGManager
@@ -38,11 +39,19 @@ cap: dict = {
 }
 
 # define device name
-device_name = "BA HALO 089 at DESKTOP-3OMH0CD"
+device_name = "BA HALO 089"
+def sk_lvl(sec_mne):
+    data, times = sec_mne.get_data(return_times=True)
+    df=pd.DataFrame(data)
+    df=df.transpose()
+    df=df.drop(columns=[4])
+    print(len(df))
+    return len(df)
 
 # start EEG acquisition setup
 with EEGManager() as mgr:
-    eeg.setup(mgr, device_name=device_name, cap=cap, sfreq=250)
+
+    eeg.setup(mgr, device_name=device_name, cap=halo, sfreq=250)
 
     # Start acquiring data
     eeg.start_acquisition()
@@ -51,11 +60,12 @@ with EEGManager() as mgr:
 
     start_time = time.time()
     annotation = 1
-    while time.time() - start_time < 5:
+    while time.time() - start_time < 30:
         time.sleep(1)
         # send annotation to the device
         print(f"Sending annotation {annotation} to the device")
         eeg.annotate(str(annotation))
+        x=sk_lvl(eeg.get_mne(tim=1))
         annotation += 1
 
     print("Preparing to plot data")
@@ -75,7 +85,7 @@ data, times = mne_raw.get_data(return_times=True)
 print(f"Data shape: {data.shape}")
 
 # save EEG data to MNE fif format
-eeg.data.save(f'./data/{time.strftime("%Y%m%d_%H%M")}-raw.fif')
+eeg.data.save(f'dura.fif')
 # Close brainaccess library
 eeg.close()
 # conversion to microvolts
