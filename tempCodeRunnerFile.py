@@ -1,23 +1,12 @@
-    ###     USUWANIE SZUMU    ###
-    
-import time
 import mne
 import os
 import numpy as np
 import pandas as pd
 
-raw = mne.io.read_raw_fif("dura.fif", preload=True)
-raw_filtered = raw.copy().filter(l_freq=1, h_freq=40)
 
-raw_filtered = raw_filtered.notch_filter(freqs=[50])
-
-raw.plot(title="Przed filtracją")
-raw_filtered.plot(title="Po filtracji")
-time.sleep(30)
-
-"""
-df = pd.read_csv("/Users/kristinapavlovska/Desktop/GALERA/hotb_starter_code/csvfiles/tiktok.csv")
-signal = df["value"].values  # <-- wpisz właściwą nazwę kolumny    
+    ###     USUWANIE SZUMU    ###
+df = pd.read_csv("tiktok.csv")
+signal = df["value"].values  # <-- wpisz właściwą nazwę kolumny
 sfreq = 250  # częstotliwość próbkowania (musisz znać!)
 
 
@@ -42,4 +31,4 @@ raw.plot(title="Przed filtracją")
 raw_filtered.plot(title="Po filtracji")
 
 
-raw_filtered = raw.copy().filter(1, 40).notch_filter(50)"""
+raw_filtered = raw.copy().filter(1, 40).notch_filter(50)
