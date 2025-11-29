@@ -13,9 +13,15 @@ class Base:
     pass
 
 
-
-
-class AccidentsORM(Base):
-    __tablename__ = 'accidents'
-
+class SessionORM(Base):
+    __tablename__ = 'sessions'
+    'saves work sessions and neural activity'
     id: Mapped[int] = mapped_column(primary_key=True,index=True)
+
+
+class UsersORM(Base):
+    __tablename__ = 'users'
+    'saves user data'
+    id: Mapped[int] = mapped_column(primary_key=True,index=True)
+    username: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[str]
