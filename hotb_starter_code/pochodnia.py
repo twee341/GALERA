@@ -6,11 +6,9 @@ import mne
 import seaborn as sb
 import gemini as g
 import numpy as np
-def usu_sz(raw):
-    raw_filtered = raw.copy().filter(l_freq=1, h_freq=40)
-
-    raw_filtered = raw_filtered.notch_filter(freqs=[50])
-    return raw_filtered
+def ReLU(x):
+    if x>0:return x
+    return 0
 def sigma3(df):
     kolumny_do_sprawdzenia = df.select_dtypes(include=[np.number]).columns.tolist()
     if "time" in kolumny_do_sprawdzenia:
@@ -23,8 +21,7 @@ def sigma3(df):
     maska_zachowania = (np.abs(podzbior - srednia) <= (3 * odchylenie)).all(axis=1)
     return df[maska_zachowania]
 
-def fif_to_df(fif):
-    raw = mne.io.read_raw_fif(fif, preload=True)
+def fif_to_df(raw):
     #raw=usu_sz(raw)
     data,times=raw.get_data(return_times=True)
     t_df=pd.DataFrame(times)
@@ -42,7 +39,15 @@ def pochodnia(df):
     df=df[100:]
     df=sigma3(df)
     return df
-
+def contr(raw):
+    df=fif_to_df(raw)
+    df=pochodnia(df)
+    df=abs(df)
+    sr=df.std()/df.mean()
+    x=(sr["O1_deriv"]*sr["O2_deriv"]*sr["Fp1_deriv"]*sr["Fp2_deriv"])**0.25
+    y=50/(ReLU(x-0.5)+0.5)
+    z=int((40-ReLU(40-ReLU(y-40)))/40*1000)/10
+    return z
 
 #print(raw.info)
 
@@ -52,10 +57,9 @@ def pochodnia(df):
 # Obejrzyj dane w interaktywnym viewerze
 
 # Pobierz dane jako NumPy array
-df=fif_to_df("xd.fif")
-df=pochodnia(df)
-df=abs(df)
-sr=df.mean()
-print(sr)
-sb.lineplot(df,x="time",y="Fp1_deriv")
-plt.show()
+if __name__=="__main__":
+    raw=mne.io.read_raw_fif("gojdatests/uncondura.fif", preload=True)
+
+    print(contr(raw))
+#sb.lineplot(df,x="time",y="Fp1_deriv")
+#plt.show()
