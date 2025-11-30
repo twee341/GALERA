@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import matplotlib
 import time
 import pandas as pd
-
 from brainaccess.utils import acquisition
 from brainaccess.core.eeg_manager import EEGManager
 
@@ -85,7 +84,7 @@ data, times = mne_raw.get_data(return_times=True)
 print(f"Data shape: {data.shape}")
 
 # save EEG data to MNE fif format
-eeg.data.save(f'ivan_s.fif')
+eeg.data.save(f'danilakoncentrat.fif')
 # Close brainaccess library
 eeg.close()
 # conversion to microvolts

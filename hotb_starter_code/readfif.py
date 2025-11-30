@@ -5,7 +5,7 @@ import time
 import mne
 import seaborn as sb
 
-raw = mne.io.read_raw_fif("xd_to_nie_dziala.fif", preload=True)
+raw = mne.io.read_raw_fif("VERYconcentratedtest.fif", preload=True)
 #print(raw.info)
 
 # Wyświetl kanały
