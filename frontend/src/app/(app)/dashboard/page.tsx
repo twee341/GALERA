@@ -23,8 +23,85 @@ export default function DashboardPage() {
 
     useEffect(() => {
         const timeout = setTimeout(() => setIsHeadsetConnected(true), 2000);
-        return () => clearTimeout(timeout);
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        if (!apiUrl) {
+            console.error("NEXT_PUBLIC_API_URL is not defined.");
+            return;
+        }
+
+        const wsUrl = apiUrl.replace(/^http/, 'ws') + '/ws';
+
+        ws.current = new WebSocket(wsUrl);
+
+        ws.current.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+
+        ws.current.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (typeof data.attentionScore === 'number') {
+                    if (isSessionActive) {
+                        const newScore = data.attentionScore;
+                        setAttentionScore(newScore);
+                        setAttentionData(prevData => {
+                            const lastTime = prevData.length > 0 ? prevData[prevData.length - 1].time : 0;
+                            const newData = [...prevData.slice(1), { time: lastTime + 1, value: newScore }];
+                            return newData;
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to parse WebSocket message:", error);
+            }
+        };
+
+        ws.current.onerror = (error) => {
+            console.error("WebSocket error:", error);
+            toast({
+                variant: "destructive",
+                title: "Connection Error",
+                description: "Failed to connect to the data stream.",
+            });
+        };
+
+        ws.current.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+
+        return () => {
+            clearTimeout(timeout);
+            if (ws.current) {
+                ws.current.close();
+            }
+        };
     }, []);
+
+    const isSessionActiveRef = useRef(isSessionActive);
+    useEffect(() => {
+        isSessionActiveRef.current = isSessionActive;
+        if (ws.current && ws.current.onmessage) {
+            ws.current.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    if (typeof data.attentionScore === 'number') {
+                        if (isSessionActiveRef.current) {
+                            const newScore = data.attentionScore;
+                            setAttentionScore(newScore);
+                            setAttentionData(prevData => {
+                                const lastTime = prevData.length > 0 ? prevData[prevData.length - 1].time : 0;
+                                const newData = [...prevData.slice(1), { time: lastTime + 1, value: newScore }];
+                                return newData;
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error("Failed to parse WebSocket message:", error);
+                }
+            };
+        }
+    }, [isSessionActive]);
 
     const showFocusAlert = useCallback(() => {
         if (settings.visualAlerts) {
@@ -37,80 +114,15 @@ export default function DashboardPage() {
     }, [settings.visualAlerts, settings.threshold, toast]);
 
     useEffect(() => {
-        if (isSessionActive) {
-            setAttentionData(Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
-            setAttentionScore(75);
-
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-            if (!apiUrl) {
-                console.error("NEXT_PUBLIC_API_URL is not defined.");
-                return;
-            }
-
-            const wsUrl = apiUrl.replace(/^http/, 'ws') + '/working';
-
-            ws.current = new WebSocket(wsUrl);
-
-            ws.current.onopen = () => {
-                console.log("WebSocket connection established");
-            };
-
-            ws.current.onmessage = (event) => {
-                try {
-                    const data = JSON.parse(event.data);
-                    if (typeof data.attentionScore === 'number') {
-                        const newScore = data.attentionScore;
-                        setAttentionScore(newScore);
-                        setAttentionData(prevData => {
-                            const lastTime = prevData.length > 0 ? prevData[prevData.length - 1].time : 0;
-                            const newData = [...prevData.slice(1), { time: lastTime + 1, value: newScore }];
-                            return newData;
-                        });
-                    }
-                } catch (error) {
-                    console.error("Failed to parse WebSocket message:", error);
-                }
-            };
-
-            ws.current.onerror = (error) => {
-                console.error("WebSocket error:", error);
-                toast({
-                    variant: "destructive",
-                    title: "Connection Error",
-                    description: "Failed to connect to the focus data stream.",
-                });
-            };
-
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed");
-            };
-
-        } else {
-            if (ws.current) {
-                ws.current.close();
-                ws.current = null;
-            }
-            setAttentionData(Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
-        }
-
-        return () => {
-            if (ws.current) {
-                ws.current.close();
-            }
-        };
-    }, [isSessionActive, toast]);
-
-
-
-    useEffect(() => {
         if (isSessionActive && attentionScore < settings.threshold) {
             showFocusAlert();
         }
     }, [attentionScore, isSessionActive, settings.threshold, showFocusAlert]);
 
+
     const handleToggleSession = async () => {
         const newSessionState = !isSessionActive;
-        const statusToSend = newSessionState ? 1 : 0;
+        const endpoint = newSessionState ? '/startup' : '/shutdown';
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
         if (!apiUrl) {
@@ -124,34 +136,34 @@ export default function DashboardPage() {
         }
 
         try {
-            const response = await fetch(`${apiUrl}/status`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ status: statusToSend }),
+            const response = await fetch(`${apiUrl}${endpoint}`, {
+                method: 'GET',
             });
 
             if (!response.ok) {
-                throw new Error(`API request failed with status ${response.status}`);
+                const errorData = await response.json();
+                throw new Error(errorData.status || `API request failed with status ${response.status}`);
+            }
+
+            if(newSessionState) {
+                setAttentionData(Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
+                setAttentionScore(75);
             }
 
             setIsSessionActive(newSessionState);
             toast({
                 title: `Session ${newSessionState ? 'Started' : 'Ended'}`,
-                description: `Successfully sent status ${statusToSend} to the API.`,
             });
 
-        } catch (error) {
-            console.error("Failed to send status to API:", error);
+        } catch (error: any) {
+            console.error("Failed to send command to API:", error);
             toast({
                 variant: "destructive",
                 title: "API Error",
-                description: "Could not update session status. Please try again.",
+                description: error.message || "Could not update session status.",
             });
         }
     };
-
 
     const isWarning = isSessionActive && attentionScore < settings.threshold;
 
