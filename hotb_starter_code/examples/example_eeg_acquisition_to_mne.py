@@ -27,7 +27,7 @@ cap: dict = {
 }
 
 # define device name
-device_name = "BA HALO 001"
+device_name = "BA HALO 089"
 
 # start EEG acquisition setup
 with EEGManager() as mgr:
@@ -53,10 +53,10 @@ with EEGManager() as mgr:
     # get all eeg data and stop acquisition
     eeg.get_mne()
     eeg.stop_acquisition()
-    mgr.disconnect()
+    #mgr.disconnect()
 
 # save EEG data to MNE fif format
-eeg.data.save(f'{time.strftime("%Y%m%d_%H%M")}-raw.fif')
+eeg.data.save(f'dd.fif')
 # Close brainaccess library
 eeg.close()
 # Show recorded data

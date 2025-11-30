@@ -65,7 +65,7 @@ def _acq_closure(ch_number: int = 1, buffer_length: int = 1000) -> tuple:
 if __name__ == "__main__":
     # Change to your device name
     # Device name can be found on the back of the device
-    device_name = "BA HALO 001"
+    device_name = "BA HALO 089"
 
     # init the core
     core.init()

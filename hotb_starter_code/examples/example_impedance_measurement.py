@@ -20,7 +20,7 @@ cap: dict = {
 }
 
 # define device name
-device_name = "BA HALO 001"
+device_name = "BA HALO 089"
 
 with EEGManager() as mgr:
 
