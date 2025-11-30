@@ -2824,7 +2824,7 @@
         "kind": 5,
         "importPath": "brainmain.backend",
         "description": "brainmain.backend",
-        "peekOfCode": "app = FastAPI()\nconnected_clients: list[WebSocket] = []\n@app.get(\"/startup/\")\nasync def read_item():\n    global activate, eeg_thread\n    if eeg_thread is not None and eeg_thread.is_alive():\n        return {\"status\": \"already running\"}\n    activate = True\n    eeg_thread = threading.Thread(target=run_eeg_acquisition, )\n    eeg_thread.start()",
+        "peekOfCode": "app = FastAPI()\nconnected_clients: list[WebSocket] = []\n@app.get(\"/startup/\")\nasync def read_item():\n    global activate, eeg_thread\n    if eeg_thread is not None and eeg_thread.is_alive():\n        return {\"status\": \"already running\"}\n    activate = True\n    eeg_thread = threading.Thread(target=run_eeg_acquisition )\n    eeg_thread.daemon = True",
         "detail": "brainmain.backend",
         "documentation": {}
     },

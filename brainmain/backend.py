@@ -91,7 +91,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 async def fas():
-    conf = uvicorn.Config("main:app", host="0.0.0.0", port=8000, reload=True)
+    conf = uvicorn.Config("main:app", host="127.0.0.1", port=8000, reload=True)
     server = uvicorn.Server(conf)
     await server.serve()
 
