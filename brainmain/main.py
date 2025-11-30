@@ -1,99 +1,94 @@
 import asyncio
-import datetime
-import os
 import threading
-import requests
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import (
-    FastAPI,
-    WebSocket,
-    WebSocketDisconnect,
-)
-from fastapi.responses import JSONResponse
 import uvicorn
-from stream import run_eeg_acquisition
-from config import *
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
+from fastapi.middleware.cors import CORSMiddleware
+
+try:
+    from stream import run_eeg_acquisition
+    from config import *
+except ImportError:
+    print("⚠️ Warning: 'stream' or 'config' modules not found. Running in mock mode might fail.")
+
+
+    def run_eeg_acquisition():
+        pass
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 connected_clients: list[WebSocket] = []
+eeg_thread = None
+activate = False
 
 
-
-
-@app.get("/startup/")
+@app.get("/startup")
 async def read_item():
     global activate, eeg_thread
-    
     if eeg_thread is not None and eeg_thread.is_alive():
         return {"status": "already running"}
 
     activate = True
-    eeg_thread = threading.Thread(target=run_eeg_acquisition )
+    eeg_thread = threading.Thread(target=run_eeg_acquisition)
     eeg_thread.daemon = True
     eeg_thread.start()
     return {"status": "EEG session started"}
 
 
-@app.get("/shutdown/")
+@app.get("/shutdown")
 async def shutdown():
     global activate, eeg_thread
-    
     activate = False
     if eeg_thread is not None:
-        eeg_thread.join()
+        eeg_thread.join(timeout=2.0)
         eeg_thread = None
     return {"status": "EEG session stopped"}
 
 @app.post("/send_stats")
-async def event(data: dict):
-    for client in connected_clients:
-        try:
-            await client.send_json(data)
-        except Exception as e:
-            print("Error sending to client:", e)
-    
+async def event(request: Request):
+    try:
+        data = await request.json()  # Принудительно читаем JSON
 
+        # Рассылаем данные всем подключенным вебсокетам
+        if connected_clients:
+            for client in connected_clients[:]:
+                try:
+                    await client.send_json(data)
+                except Exception as e:
+                    print(f"Error sending to client: {e}")
+                    if client in connected_clients:
+                        connected_clients.remove(client)
+        return {"status": "ok"}
+    except Exception as e:
+        print(f"❌ Error processing stats: {e}")
+        return {"status": "error", "detail": str(e)}
 
-
-"""
-
-async def sendMessageToClients(message):
-    to_remove = []
-    for ws in connected_clients:
-        try:
-            await ws.send_json({"message": message})
-        except Exception as e:
-            print("Error sending to client:", e)
-            to_remove.append(ws)
-
-    # Clean up broken connections
-    for ws in to_remove:
-        connected_clients.remove(ws)
-"""
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-
     await websocket.accept()
     connected_clients.append(websocket)
+    print(f"✅ Client connected. Total clients: {len(connected_clients)}")
 
     try:
         while True:
-            await websocket.receive_text()  # optional, can remove if you want
+            await asyncio.sleep(1)
     except WebSocketDisconnect:
-        connected_clients.remove(websocket)
         print("❌ Client disconnected")
-    except Exception as e:
-        print("⚠️ Error:", e)
         if websocket in connected_clients:
             connected_clients.remove(websocket)
-        await websocket.close()
-
-
-async def fas():
-    conf = uvicorn.Config("main:app", host="127.0.0.1", port=8000, reload=True)
-    server = uvicorn.Server(conf)
-    await server.serve()
+    except Exception as e:
+        print(f"⚠️ WebSocket Error: {e}")
+        if websocket in connected_clients:
+            connected_clients.remove(websocket)
 
 
 if __name__ == "__main__":
-    asyncio.run(fas())
+    uvicorn.run(app, host="0.0.0.0", port=8000)
