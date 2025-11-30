@@ -11,7 +11,6 @@ from fastapi import (
 )
 from fastapi.responses import JSONResponse
 import uvicorn
-from db_requests import db
 from stream import run_eeg_acquisition
 from config import *
 app = FastAPI()

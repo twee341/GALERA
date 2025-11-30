@@ -25,30 +25,37 @@ export default function DashboardPage() {
         const timeout = setTimeout(() => setIsHeadsetConnected(true), 2000);
 
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (!apiUrl) {
-            console.error("NEXT_PUBLIC_API_URL is not defined.");
+        if (!apiUrl) return;
+
+        // Если соединение уже открыто или открывается — не создаем новое
+        if (ws.current && (ws.current.readyState === WebSocket.OPEN || ws.current.readyState === WebSocket.CONNECTING)) {
+            console.log("WebSocket already connected");
             return;
         }
 
-        const wsUrl = apiUrl.replace(/^http/, 'ws') + '/ws';
+        const cleanUrl = apiUrl.replace(/\/$/, '');
+        const wsUrl = cleanUrl.replace(/^http/, 'ws') + '/ws';
 
-        ws.current = new WebSocket(wsUrl);
+        console.log("Attempting connection to:", wsUrl); // Лог для проверки
+        const socket = new WebSocket(wsUrl);
+        ws.current = socket;
 
-        ws.current.onopen = () => {
-            console.log("WebSocket connection established");
+        socket.onopen = () => {
+            console.log("✅ WebSocket connection established");
         };
 
-        ws.current.onmessage = (event) => {
+        socket.onmessage = (event) => {
+            // Ваша логика обработки сообщений (без изменений)
             try {
                 const data = JSON.parse(event.data);
                 if (typeof data.attentionScore === 'number') {
-                    if (isSessionActive) {
+                    if (isSessionActiveRef.current) { // Используем Ref, так как он актуален внутри замыкания
+                        // ... логика обновления стейта ...
                         const newScore = data.attentionScore;
                         setAttentionScore(newScore);
                         setAttentionData(prevData => {
                             const lastTime = prevData.length > 0 ? prevData[prevData.length - 1].time : 0;
-                            const newData = [...prevData.slice(1), { time: lastTime + 1, value: newScore }];
-                            return newData;
+                            return [...prevData.slice(1), { time: lastTime + 1, value: newScore }];
                         });
                     }
                 }
@@ -57,25 +64,30 @@ export default function DashboardPage() {
             }
         };
 
-        ws.current.onerror = (error) => {
-            console.error("WebSocket error:", error);
-            toast({
-                variant: "destructive",
-                title: "Connection Error",
-                description: "Failed to connect to the data stream.",
-            });
+        socket.onerror = (error) => {
+            // Игнорируем ошибку, если сокет уже закрывается (часто бывает при релоаде)
+            if (socket.readyState !== WebSocket.CLOSED && socket.readyState !== WebSocket.CLOSING) {
+                console.error("WebSocket error:", error);
+                toast({
+                    variant: "destructive",
+                    title: "Connection Error",
+                    description: "Failed to connect to the data stream.",
+                });
+            }
         };
 
-        ws.current.onclose = () => {
-            console.log("WebSocket connection closed");
+        socket.onclose = (event) => {
+            console.log(`WebSocket closed: Code ${event.code}, Reason: ${event.reason}`);
         };
 
         return () => {
             clearTimeout(timeout);
-            if (ws.current) {
-                ws.current.close();
+            // Закрываем сокет только при размонтировании компонента
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.close();
             }
         };
+        // Добавьте пустой массив зависимостей, чтобы effect сработал 1 раз
     }, []);
 
     const isSessionActiveRef = useRef(isSessionActive);
