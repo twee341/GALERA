@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAppContext } from '@/contexts/app-provider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,6 +19,7 @@ export default function DashboardPage() {
     const [attentionData, setAttentionData] = useState<AttentionDataPoint[]>(() => Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
     const { toast } = useToast();
     const [isHeadsetConnected, setIsHeadsetConnected] = useState(false);
+    const ws = useRef<WebSocket | null>(null);
 
     useEffect(() => {
         const timeout = setTimeout(() => setIsHeadsetConnected(true), 2000);
@@ -36,29 +37,69 @@ export default function DashboardPage() {
     }, [settings.visualAlerts, settings.threshold, toast]);
 
     useEffect(() => {
-        let interval: NodeJS.Timeout | undefined = undefined;
         if (isSessionActive) {
-            setAttentionData(Array.from({ length: 30 }, (_, i) => ({ time: i, value: 75 })));
+            setAttentionData(Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
             setAttentionScore(75);
 
-            interval = setInterval(() => {
-                setAttentionScore(prevScore => {
-                    const change = Math.random() * 12 - 6;
-                    const newScore = Math.max(0, Math.min(100, prevScore + change));
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            if (!apiUrl) {
+                console.error("NEXT_PUBLIC_API_URL is not defined.");
+                return;
+            }
 
-                    setAttentionData(prevData => {
-                        const newData = [...prevData.slice(1), { time: prevData[prevData.length -1].time + 1, value: newScore }];
-                        return newData;
-                    });
+            const wsUrl = apiUrl.replace(/^http/, 'ws') + '/working';
 
-                    return newScore;
+            ws.current = new WebSocket(wsUrl);
+
+            ws.current.onopen = () => {
+                console.log("WebSocket connection established");
+            };
+
+            ws.current.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    if (typeof data.attentionScore === 'number') {
+                        const newScore = data.attentionScore;
+                        setAttentionScore(newScore);
+                        setAttentionData(prevData => {
+                            const lastTime = prevData.length > 0 ? prevData[prevData.length - 1].time : 0;
+                            const newData = [...prevData.slice(1), { time: lastTime + 1, value: newScore }];
+                            return newData;
+                        });
+                    }
+                } catch (error) {
+                    console.error("Failed to parse WebSocket message:", error);
+                }
+            };
+
+            ws.current.onerror = (error) => {
+                console.error("WebSocket error:", error);
+                toast({
+                    variant: "destructive",
+                    title: "Connection Error",
+                    description: "Failed to connect to the focus data stream.",
                 });
-            }, 1000);
+            };
+
+            ws.current.onclose = () => {
+                console.log("WebSocket connection closed");
+            };
+
         } else {
+            if (ws.current) {
+                ws.current.close();
+                ws.current = null;
+            }
             setAttentionData(Array.from({ length: 30 }, (_, i) => ({ time: i, value: null })));
         }
-        return () => clearInterval(interval);
-    }, [isSessionActive]);
+
+        return () => {
+            if (ws.current) {
+                ws.current.close();
+            }
+        };
+    }, [isSessionActive, toast]);
+
 
 
     useEffect(() => {
@@ -66,6 +107,50 @@ export default function DashboardPage() {
             showFocusAlert();
         }
     }, [attentionScore, isSessionActive, settings.threshold, showFocusAlert]);
+
+    const handleToggleSession = async () => {
+        const newSessionState = !isSessionActive;
+        const statusToSend = newSessionState ? 1 : 0;
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+        if (!apiUrl) {
+            console.error("NEXT_PUBLIC_API_URL is not defined in your environment variables.");
+            toast({
+                variant: "destructive",
+                title: "Configuration Error",
+                description: "The API URL is not set.",
+            });
+            return;
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: statusToSend }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+
+            setIsSessionActive(newSessionState);
+            toast({
+                title: `Session ${newSessionState ? 'Started' : 'Ended'}`,
+                description: `Successfully sent status ${statusToSend} to the API.`,
+            });
+
+        } catch (error) {
+            console.error("Failed to send status to API:", error);
+            toast({
+                variant: "destructive",
+                title: "API Error",
+                description: "Could not update session status. Please try again.",
+            });
+        }
+    };
 
 
     const isWarning = isSessionActive && attentionScore < settings.threshold;
@@ -110,7 +195,7 @@ export default function DashboardPage() {
                         <Button
                             size="lg"
                             className="w-full text-xl h-16 font-bold"
-                            onClick={() => setIsSessionActive(prev => !prev)}
+                            onClick={handleToggleSession}
                             variant={isSessionActive ? 'destructive' : 'default'}
                             disabled={!isHeadsetConnected}
                         >
