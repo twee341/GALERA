@@ -56,13 +56,13 @@ def run_eeg_acquisition(timme=5):
         foc=pd.DataFrame({"i","foc"})
         i=0
 
-        start_time = datetime.datetime.now()
+
 
         annotation = 1
         print("Starting in 5 seconds")
         time.sleep(5)
         #while time.time() - start_time < 10:
-        while activate and (datetime.datetime.now() - start_time).seconds < timme*60:
+        while activate:
             time.sleep(1)
 
             eeg.annotate(str(annotation))
@@ -111,7 +111,7 @@ def run_eeg_acquisition(timme=5):
 
     to_send = {"avg": final_avg,"max": final_max}
     json_avgmax = json.dumps(to_send)
-    response = requests.post("http://127.0.0.1:8000/send_stats", json=json_focus)
+    response = requests.post("http://127.0.0.1:8000/send_stats", json=json_avgmax)
     #here send json_avgmax to database !!!
 
     """ Use to graphical display

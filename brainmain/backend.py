@@ -28,7 +28,8 @@ async def read_item():
         return {"status": "already running"}
 
     activate = True
-    eeg_thread = threading.Thread(target=run_eeg_acquisition, )
+    eeg_thread = threading.Thread(target=run_eeg_acquisition )
+    eeg_thread.daemon = True
     eeg_thread.start()
     return {"status": "EEG session started"}
 
