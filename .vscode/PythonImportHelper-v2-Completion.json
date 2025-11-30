@@ -642,7 +642,7 @@
         "documentation": {}
     },
     {
-        "label": "GainMode",
+        "label": "multiplier_to_gain_mode",
         "importPath": "brainaccess.core.gain_mode",
         "description": "brainaccess.core.gain_mode",
         "isExtraImport": true,
@@ -650,7 +650,7 @@
         "documentation": {}
     },
     {
-        "label": "multiplier_to_gain_mode",
+        "label": "GainMode",
         "importPath": "brainaccess.core.gain_mode",
         "description": "brainaccess.core.gain_mode",
         "isExtraImport": true,
@@ -825,6 +825,22 @@
         "description": "brainaccess.utils",
         "isExtraImport": true,
         "detail": "brainaccess.utils",
+        "documentation": {}
+    },
+    {
+        "label": "acquisition",
+        "importPath": "brainaccess.utils",
+        "description": "brainaccess.utils",
+        "isExtraImport": true,
+        "detail": "brainaccess.utils",
+        "documentation": {}
+    },
+    {
+        "label": "EEGManager",
+        "importPath": "brainaccess.core.eeg_manager",
+        "description": "brainaccess.core.eeg_manager",
+        "isExtraImport": true,
+        "detail": "brainaccess.core.eeg_manager",
         "documentation": {}
     },
     {
@@ -1087,6 +1103,15 @@
         "importPath": "seaborn",
         "description": "seaborn",
         "detail": "seaborn",
+        "documentation": {}
+    },
+    {
+        "label": "gemini",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "gemini",
+        "description": "gemini",
+        "detail": "gemini",
         "documentation": {}
     },
     {
@@ -4233,150 +4258,6 @@
         "documentation": {}
     },
     {
-        "label": "eeg",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_acquisition_to_mne",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_acquisition_to_mne",
-        "peekOfCode": "eeg = acquisition.EEG()\n# define electrode locations\ncap: dict = {\n    0: \"Fp1\",\n    1: \"Fp2\",\n    2: \"O1\",\n    3: \"O2\",\n}\n# define device name\ndevice_name = \"BA HALO 001\"",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_acquisition_to_mne",
-        "documentation": {}
-    },
-    {
-        "label": "device_name",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_acquisition_to_mne",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_acquisition_to_mne",
-        "peekOfCode": "device_name = \"BA HALO 001\"\n# start EEG acquisition setup\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=cap, sfreq=250)\n    # Start acquiring data\n    eeg.start_acquisition()\n    print(\"Acquisition started\")\n    time.sleep(3)\n    start_time = time.time()\n    annotation = 1",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_acquisition_to_mne",
-        "documentation": {}
-    },
-    {
-        "label": "sampling_rate",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "sampling_rate = 250\nt = np.arange(0, 5, step=1.0 / (sampling_rate))\nwave = 10 * np.sin(np.pi * 2 * 5 * t)\nwave += 100 * np.sin(np.pi * 2 * 23 * t)\nwave = wave.reshape(5, sampling_rate) + 2\nwave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "t",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "t = np.arange(0, 5, step=1.0 / (sampling_rate))\nwave = 10 * np.sin(np.pi * 2 * 5 * t)\nwave += 100 * np.sin(np.pi * 2 * 23 * t)\nwave = wave.reshape(5, sampling_rate) + 2\nwave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "wave",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "wave = 10 * np.sin(np.pi * 2 * 5 * t)\nwave += 100 * np.sin(np.pi * 2 * 23 * t)\nwave = wave.reshape(5, sampling_rate) + 2\nwave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "wave",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "wave = wave.reshape(5, sampling_rate) + 2\nwave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "wave2",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "wave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "data",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "data = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "data",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "data = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "mean",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "mean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "data_filtered",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "data_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "data_fft",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "peekOfCode": "data_fft = processor.fft(data, sampling_rate)[\"mag\"]",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_eeg_processing",
-        "documentation": {}
-    },
-    {
-        "label": "eeg",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_impedance_measurement",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_impedance_measurement",
-        "peekOfCode": "eeg = acquisition.EEG()\ncap: dict = {\n  0: \"Fp1\",\n  1: \"Fp2\",\n  2: \"O1\",\n  3: \"O2\",\n}\n# define device name\ndevice_name = \"BA HALO 001\"\nwith EEGManager() as mgr:",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_impedance_measurement",
-        "documentation": {}
-    },
-    {
-        "label": "device_name",
-        "kind": 5,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_impedance_measurement",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_impedance_measurement",
-        "peekOfCode": "device_name = \"BA HALO 001\"\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=cap)\n    # Start measuring impedance\n    eeg.start_impedance_measurement()\n    time.sleep(2)\n    # Print impedances\n    start_time = time.time()\n    while time.time()-start_time < 20:\n        time.sleep(1)",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_impedance_measurement",
-        "documentation": {}
-    },
-    {
-        "label": "butter_bandpass",
-        "kind": 2,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_minimal_eeg_acquisition",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_minimal_eeg_acquisition",
-        "peekOfCode": "def butter_bandpass(\n    lowcut: float, highcut: float, fs: int, order: int = 2\n) -> np.ndarray:\n    \"\"\"Design a bandpass Butterworth filter.\"\"\"\n    nyq = 0.5 * fs\n    low = lowcut / nyq\n    high = highcut / nyq\n    sos = butter(order, [low, high], analog=False, btype=\"bandpass\", output=\"sos\")\n    return sos\ndef butter_bandpass_filter(",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_minimal_eeg_acquisition",
-        "documentation": {}
-    },
-    {
-        "label": "butter_bandpass_filter",
-        "kind": 2,
-        "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_minimal_eeg_acquisition",
-        "description": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_minimal_eeg_acquisition",
-        "peekOfCode": "def butter_bandpass_filter(\n    data: np.ndarray, lowcut: float, highcut: float, fs: int, order: int = 2\n) -> np.ndarray:\n    \"\"\"Apply a bandpass Butterworth filter to the data.\"\"\"\n    sos = butter_bandpass(lowcut, highcut, fs, order=order)\n    y = sosfiltfilt(sos, data)\n    return y\ndef _acq_closure(ch_number: int = 1, buffer_length: int = 1000) -> tuple:\n    \"\"\"Acquisition callback closure.\"\"\"\n    data = np.zeros((ch_number, buffer_length))",
-        "detail": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.examples.example_minimal_eeg_acquisition",
-        "documentation": {}
-    },
-    {
         "label": "EEG",
         "kind": 6,
         "importPath": "hotb_starter_code.BrainAccessSDK-windows.python_api.brainaccess.utils.acquisition",
@@ -4476,12 +4357,381 @@
         "documentation": {}
     },
     {
+        "label": "eeg",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_acquisition_to_mne",
+        "description": "hotb_starter_code.examples.example_eeg_acquisition_to_mne",
+        "peekOfCode": "eeg = acquisition.EEG()\n# define electrode locations\ncap: dict = {\n    0: \"Fp1\",\n    1: \"Fp2\",\n    2: \"O1\",\n    3: \"O2\",\n}\n# define device name\ndevice_name = \"BA HALO 089\"",
+        "detail": "hotb_starter_code.examples.example_eeg_acquisition_to_mne",
+        "documentation": {}
+    },
+    {
+        "label": "device_name",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_acquisition_to_mne",
+        "description": "hotb_starter_code.examples.example_eeg_acquisition_to_mne",
+        "peekOfCode": "device_name = \"BA HALO 089\"\n# start EEG acquisition setup\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=cap, sfreq=250)\n    # Start acquiring data\n    eeg.start_acquisition()\n    print(\"Acquisition started\")\n    time.sleep(3)\n    start_time = time.time()\n    annotation = 1",
+        "detail": "hotb_starter_code.examples.example_eeg_acquisition_to_mne",
+        "documentation": {}
+    },
+    {
+        "label": "sampling_rate",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "sampling_rate = 250\nt = np.arange(0, 5, step=1.0 / (sampling_rate))\nwave = 10 * np.sin(np.pi * 2 * 5 * t)\nwave += 100 * np.sin(np.pi * 2 * 23 * t)\nwave = wave.reshape(5, sampling_rate) + 2\nwave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "t",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "t = np.arange(0, 5, step=1.0 / (sampling_rate))\nwave = 10 * np.sin(np.pi * 2 * 5 * t)\nwave += 100 * np.sin(np.pi * 2 * 23 * t)\nwave = wave.reshape(5, sampling_rate) + 2\nwave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "wave",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "wave = 10 * np.sin(np.pi * 2 * 5 * t)\nwave += 100 * np.sin(np.pi * 2 * 23 * t)\nwave = wave.reshape(5, sampling_rate) + 2\nwave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "wave",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "wave = wave.reshape(5, sampling_rate) + 2\nwave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "wave2",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "wave2 = 10 * np.sin(np.pi * 2 * 5 * t).reshape(5, sampling_rate) + 2\ndata = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "data",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "data = np.stack([wave, wave2], axis=2)\ndata = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "data",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "data = np.moveaxis(data, 2, 0)\n# Calculate mean of the data\nmean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "mean",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "mean = processor.mean(data[0, :, :])\n# Filter data\ndata_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "data_filtered",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "data_filtered = processor.filter_bandpass(data, sampling_rate, 48, 52)\n# Calculate fft\ndata_fft = processor.fft(data, sampling_rate)[\"mag\"]",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "data_fft",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_eeg_processing",
+        "description": "hotb_starter_code.examples.example_eeg_processing",
+        "peekOfCode": "data_fft = processor.fft(data, sampling_rate)[\"mag\"]",
+        "detail": "hotb_starter_code.examples.example_eeg_processing",
+        "documentation": {}
+    },
+    {
+        "label": "eeg",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_impedance_measurement",
+        "description": "hotb_starter_code.examples.example_impedance_measurement",
+        "peekOfCode": "eeg = acquisition.EEG()\ncap: dict = {\n  0: \"Fp1\",\n  1: \"Fp2\",\n  2: \"O1\",\n  3: \"O2\",\n}\n# define device name\ndevice_name = \"BA HALO 089\"\nwith EEGManager() as mgr:",
+        "detail": "hotb_starter_code.examples.example_impedance_measurement",
+        "documentation": {}
+    },
+    {
+        "label": "device_name",
+        "kind": 5,
+        "importPath": "hotb_starter_code.examples.example_impedance_measurement",
+        "description": "hotb_starter_code.examples.example_impedance_measurement",
+        "peekOfCode": "device_name = \"BA HALO 089\"\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=cap)\n    # Start measuring impedance\n    eeg.start_impedance_measurement()\n    time.sleep(2)\n    # Print impedances\n    start_time = time.time()\n    while time.time()-start_time < 20:\n        time.sleep(1)",
+        "detail": "hotb_starter_code.examples.example_impedance_measurement",
+        "documentation": {}
+    },
+    {
+        "label": "butter_bandpass",
+        "kind": 2,
+        "importPath": "hotb_starter_code.examples.example_minimal_eeg_acquisition",
+        "description": "hotb_starter_code.examples.example_minimal_eeg_acquisition",
+        "peekOfCode": "def butter_bandpass(\n    lowcut: float, highcut: float, fs: int, order: int = 2\n) -> np.ndarray:\n    \"\"\"Design a bandpass Butterworth filter.\"\"\"\n    nyq = 0.5 * fs\n    low = lowcut / nyq\n    high = highcut / nyq\n    sos = butter(order, [low, high], analog=False, btype=\"bandpass\", output=\"sos\")\n    return sos\ndef butter_bandpass_filter(",
+        "detail": "hotb_starter_code.examples.example_minimal_eeg_acquisition",
+        "documentation": {}
+    },
+    {
+        "label": "butter_bandpass_filter",
+        "kind": 2,
+        "importPath": "hotb_starter_code.examples.example_minimal_eeg_acquisition",
+        "description": "hotb_starter_code.examples.example_minimal_eeg_acquisition",
+        "peekOfCode": "def butter_bandpass_filter(\n    data: np.ndarray, lowcut: float, highcut: float, fs: int, order: int = 2\n) -> np.ndarray:\n    \"\"\"Apply a bandpass Butterworth filter to the data.\"\"\"\n    sos = butter_bandpass(lowcut, highcut, fs, order=order)\n    y = sosfiltfilt(sos, data)\n    return y\ndef _acq_closure(ch_number: int = 1, buffer_length: int = 1000) -> tuple:\n    \"\"\"Acquisition callback closure.\"\"\"\n    data = np.zeros((ch_number, buffer_length))",
+        "detail": "hotb_starter_code.examples.example_minimal_eeg_acquisition",
+        "documentation": {}
+    },
+    {
+        "label": "extract_bandpower",
+        "kind": 2,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "def extract_bandpower(signal, fs, band):\n    freqs = np.fft.fftfreq(len(signal), 1/fs)\n    fft_vals = np.abs(np.fft.fft(signal))**2\n    band_power = fft_vals[(freqs >= band[0]) & (freqs <= band[1])].sum()\n    return band_power\nfs = 250  # częstotliwość próbkowania EEG (Hz) – zależy od opaski\nbands = {\"delta\":(0.5,4), \"theta\":(4,8), \"alpha\":(8,12), \"beta\":(12,30)}\n\"\"\"\nplt.figure(figsize=(10,5))\nplt.plot(ds_f[\"freq\"][:N//2], ds_f[\"O2\"][:N//2])",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "read_csv",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "read_csv = pd.read_csv('C:\\\\Users\\\\user\\\\GALERA\\\\hotb_starter_code\\\\csvfiles\\\\tiktok.csv')\nin_df = pd.DataFrame(read_csv)\ndf = in_df[[\"time\",\"O1\",\"O2\",\"Fp1\",\"Fp2\"]]\nsb.lineplot(df,x=\"time\",y=\"Fp2\")\nplt.show()\ndt = df[\"time\"].iloc[1] - df[\"time\"].iloc[0]\nN = len(df)\nfreqs = np.fft.fftfreq(N, d=dt)\nds_f = pd.DataFrame({\"freq\": freqs})\nfor col in [\"O1\",\"O2\",\"Fp1\",\"Fp2\"]:",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "in_df",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "in_df = pd.DataFrame(read_csv)\ndf = in_df[[\"time\",\"O1\",\"O2\",\"Fp1\",\"Fp2\"]]\nsb.lineplot(df,x=\"time\",y=\"Fp2\")\nplt.show()\ndt = df[\"time\"].iloc[1] - df[\"time\"].iloc[0]\nN = len(df)\nfreqs = np.fft.fftfreq(N, d=dt)\nds_f = pd.DataFrame({\"freq\": freqs})\nfor col in [\"O1\",\"O2\",\"Fp1\",\"Fp2\"]:\n    fft_values = np.fft.fft(df[col])",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "df = in_df[[\"time\",\"O1\",\"O2\",\"Fp1\",\"Fp2\"]]\nsb.lineplot(df,x=\"time\",y=\"Fp2\")\nplt.show()\ndt = df[\"time\"].iloc[1] - df[\"time\"].iloc[0]\nN = len(df)\nfreqs = np.fft.fftfreq(N, d=dt)\nds_f = pd.DataFrame({\"freq\": freqs})\nfor col in [\"O1\",\"O2\",\"Fp1\",\"Fp2\"]:\n    fft_values = np.fft.fft(df[col])\n    ds_f[col] = np.abs(fft_values)",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "dt",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "dt = df[\"time\"].iloc[1] - df[\"time\"].iloc[0]\nN = len(df)\nfreqs = np.fft.fftfreq(N, d=dt)\nds_f = pd.DataFrame({\"freq\": freqs})\nfor col in [\"O1\",\"O2\",\"Fp1\",\"Fp2\"]:\n    fft_values = np.fft.fft(df[col])\n    ds_f[col] = np.abs(fft_values)\nds_f=ds_f.drop([0])\nprint(ds_f)\ndef extract_bandpower(signal, fs, band):",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "N",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "N = len(df)\nfreqs = np.fft.fftfreq(N, d=dt)\nds_f = pd.DataFrame({\"freq\": freqs})\nfor col in [\"O1\",\"O2\",\"Fp1\",\"Fp2\"]:\n    fft_values = np.fft.fft(df[col])\n    ds_f[col] = np.abs(fft_values)\nds_f=ds_f.drop([0])\nprint(ds_f)\ndef extract_bandpower(signal, fs, band):\n    freqs = np.fft.fftfreq(len(signal), 1/fs)",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "freqs",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "freqs = np.fft.fftfreq(N, d=dt)\nds_f = pd.DataFrame({\"freq\": freqs})\nfor col in [\"O1\",\"O2\",\"Fp1\",\"Fp2\"]:\n    fft_values = np.fft.fft(df[col])\n    ds_f[col] = np.abs(fft_values)\nds_f=ds_f.drop([0])\nprint(ds_f)\ndef extract_bandpower(signal, fs, band):\n    freqs = np.fft.fftfreq(len(signal), 1/fs)\n    fft_vals = np.abs(np.fft.fft(signal))**2",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "ds_f",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "ds_f = pd.DataFrame({\"freq\": freqs})\nfor col in [\"O1\",\"O2\",\"Fp1\",\"Fp2\"]:\n    fft_values = np.fft.fft(df[col])\n    ds_f[col] = np.abs(fft_values)\nds_f=ds_f.drop([0])\nprint(ds_f)\ndef extract_bandpower(signal, fs, band):\n    freqs = np.fft.fftfreq(len(signal), 1/fs)\n    fft_vals = np.abs(np.fft.fft(signal))**2\n    band_power = fft_vals[(freqs >= band[0]) & (freqs <= band[1])].sum()",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "fs",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "fs = 250  # częstotliwość próbkowania EEG (Hz) – zależy od opaski\nbands = {\"delta\":(0.5,4), \"theta\":(4,8), \"alpha\":(8,12), \"beta\":(12,30)}\n\"\"\"\nplt.figure(figsize=(10,5))\nplt.plot(ds_f[\"freq\"][:N//2], ds_f[\"O2\"][:N//2])\nplt.title(\"Widmo sygnału O1\")\nplt.xlabel(\"Częstotliwość [Hz]\")\nplt.ylabel(\"Amplituda\")\nplt.show()\n\"\"\"",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
+        "label": "bands",
+        "kind": 5,
+        "importPath": "hotb_starter_code.data_in",
+        "description": "hotb_starter_code.data_in",
+        "peekOfCode": "bands = {\"delta\":(0.5,4), \"theta\":(4,8), \"alpha\":(8,12), \"beta\":(12,30)}\n\"\"\"\nplt.figure(figsize=(10,5))\nplt.plot(ds_f[\"freq\"][:N//2], ds_f[\"O2\"][:N//2])\nplt.title(\"Widmo sygnału O1\")\nplt.xlabel(\"Częstotliwość [Hz]\")\nplt.ylabel(\"Amplituda\")\nplt.show()\n\"\"\"",
+        "detail": "hotb_starter_code.data_in",
+        "documentation": {}
+    },
+    {
         "label": "name_lookup",
         "kind": 2,
         "importPath": "hotb_starter_code.device_name_lookup",
         "description": "hotb_starter_code.device_name_lookup",
         "peekOfCode": "def name_lookup() -> None:\n    core.init()\n    devices = core.scan()\n    if devices:\n        print(f\"Available devices: {[device.name for device in devices]}\")\n    else:\n        print(\"No devices were found!\")\n    core.close()\nif __name__ == \"__main__\":\n    name_lookup()",
         "detail": "hotb_starter_code.device_name_lookup",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_band_power_mne",
+        "kind": 2,
+        "importPath": "hotb_starter_code.gemini",
+        "description": "hotb_starter_code.gemini",
+        "peekOfCode": "def calculate_band_power_mne(raw):\n    # 1. Wczytanie pliku\n    # 2. Obliczenie PSD (Power Spectral Density)\n    # fmax ustawiamy np. na 50 lub 100 Hz\n    spectrum = raw.compute_psd(method='welch', fmin=0.5, fmax=50)\n    # Pobieramy dane: (liczba_kanałów, liczba_częstotliwości)\n    psds, freqs = spectrum.get_data(return_freqs=True)\n    # Lista kanałów (bez kanałów stymulacji/znaczników, jeśli są)\n    # W Twoim pliku main.py usuwałeś kolumnę 4, tutaj MNE zazwyczaj sam oznacza typy kanałów\n    ch_names = raw.ch_names",
+        "detail": "hotb_starter_code.gemini",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_focus_index",
+        "kind": 2,
+        "importPath": "hotb_starter_code.gemini",
+        "description": "hotb_starter_code.gemini",
+        "peekOfCode": "def calculate_focus_index(df_bands):\n    \"\"\"\n    Oblicza indeks skupienia na podstawie gotowej ramki z mocami pasm.\n    Wzór: Beta / Theta na kanałach czołowych (Fp1, Fp2).\n    \"\"\"\n    # Filtrujemy tylko kanały czołowe, bo one najlepiej oddają \"Executive Control\"\n    frontal_df = df_bands[df_bands[\"Channel\"].isin([\"Fp1\", \"Fp2\"])]\n    # Sumujemy moce z obu kanałów (uśrednianie przestrzenne)\n    avg_beta = frontal_df[\"Beta\"].mean()\n    avg_theta = frontal_df[\"Theta\"].mean()",
+        "detail": "hotb_starter_code.gemini",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_derivatives_exclude_time",
+        "kind": 2,
+        "importPath": "hotb_starter_code.gemini",
+        "description": "hotb_starter_code.gemini",
+        "peekOfCode": "def calculate_derivatives_exclude_time(df, time_col=\"time\"):\n    \"\"\"\n    Oblicza pochodną (dy/dt) dla zmiennych w DataFrame, pomijając kolumnę czasu w wynikach.\n    Args:\n        df (pd.DataFrame): Dane wejściowe.\n        time_col (str): Nazwa kolumny z czasem (używana do obliczenia dt).\n    Returns:\n        pd.DataFrame: DataFrame zawierający tylko pochodne sygnałów (bez kolumny czasu).\n    \"\"\"\n    # Sprawdzamy, czy kolumna czasu istnieje",
+        "detail": "hotb_starter_code.gemini",
+        "documentation": {}
+    },
+    {
+        "label": "BANDS",
+        "kind": 5,
+        "importPath": "hotb_starter_code.gemini",
+        "description": "hotb_starter_code.gemini",
+        "peekOfCode": "BANDS = {\n    \"Delta\": (0.5, 4),\n    \"Theta\": (4, 8),\n    \"Alpha\": (8, 13),\n    \"Beta\": (13, 30),\n    \"Gamma\": (30, 45) # Często ogranicza się do 45/50 Hz ze względu na szum sieci elektrycznej\n}\ndef calculate_band_power_mne(raw):\n    # 1. Wczytanie pliku\n    # 2. Obliczenie PSD (Power Spectral Density)",
+        "detail": "hotb_starter_code.gemini",
+        "documentation": {}
+    },
+    {
+        "label": "fif_to_df",
+        "kind": 2,
+        "importPath": "hotb_starter_code.main",
+        "description": "hotb_starter_code.main",
+        "peekOfCode": "def fif_to_df(fif):\n    raw = mne.io.read_raw_fif(fif, preload=True)\n    data,times=raw.get_data(return_times=True)\n    t_df=pd.DataFrame(times)\n    df=pd.DataFrame(data)\n    df=df.transpose()\n    df.insert(0, 'time', t_df)\n    df=df.drop(4,axis=1)\n    df = df.set_axis([\"time\",\"O1\",\"O2\",\"Fp2\",\"Fp1\"], axis=1)\n    return df",
+        "detail": "hotb_starter_code.main",
+        "documentation": {}
+    },
+    {
+        "label": "fourier_transform",
+        "kind": 2,
+        "importPath": "hotb_starter_code.main",
+        "description": "hotb_starter_code.main",
+        "peekOfCode": "def fourier_transform(df, signal_cols, time_col=\"time\"):\n    dt = df[time_col].iloc[1] - df[time_col].iloc[0]\n    N = len(df)\n    freqs = np.fft.fftfreq(N, d=dt)\n    ds_f = pd.DataFrame({\"freq\": freqs})\n    for col in signal_cols:\n        fft_values = np.fft.fft(df[col].values)\n        amplitudes = np.abs(fft_values)\n        mean_val = amplitudes.mean()\n        std_val = amplitudes.std()",
+        "detail": "hotb_starter_code.main",
+        "documentation": {}
+    },
+    {
+        "label": "usu_sz",
+        "kind": 2,
+        "importPath": "hotb_starter_code.pochodnia",
+        "description": "hotb_starter_code.pochodnia",
+        "peekOfCode": "def usu_sz(raw):\n    raw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\n    raw_filtered = raw_filtered.notch_filter(freqs=[50])\n    return raw_filtered\ndef sigma3(df):\n    kolumny_do_sprawdzenia = df.select_dtypes(include=[np.number]).columns.tolist()\n    if \"time\" in kolumny_do_sprawdzenia:\n        kolumny_do_sprawdzenia.remove(\"time\")\n    if not kolumny_do_sprawdzenia:\n        return df",
+        "detail": "hotb_starter_code.pochodnia",
+        "documentation": {}
+    },
+    {
+        "label": "sigma3",
+        "kind": 2,
+        "importPath": "hotb_starter_code.pochodnia",
+        "description": "hotb_starter_code.pochodnia",
+        "peekOfCode": "def sigma3(df):\n    kolumny_do_sprawdzenia = df.select_dtypes(include=[np.number]).columns.tolist()\n    if \"time\" in kolumny_do_sprawdzenia:\n        kolumny_do_sprawdzenia.remove(\"time\")\n    if not kolumny_do_sprawdzenia:\n        return df\n    podzbior = df[kolumny_do_sprawdzenia]\n    srednia = podzbior.mean()\n    odchylenie = podzbior.std()\n    maska_zachowania = (np.abs(podzbior - srednia) <= (3 * odchylenie)).all(axis=1)",
+        "detail": "hotb_starter_code.pochodnia",
+        "documentation": {}
+    },
+    {
+        "label": "fif_to_df",
+        "kind": 2,
+        "importPath": "hotb_starter_code.pochodnia",
+        "description": "hotb_starter_code.pochodnia",
+        "peekOfCode": "def fif_to_df(fif):\n    raw = mne.io.read_raw_fif(fif, preload=True)\n    #raw=usu_sz(raw)\n    data,times=raw.get_data(return_times=True)\n    t_df=pd.DataFrame(times)\n    df=pd.DataFrame(data)\n    df=df.transpose()\n    df.insert(0, 'time', t_df)\n    df=df.drop(4,axis=1)\n    df = df.set_axis([\"time\",\"O1\",\"O2\",\"Fp2\",\"Fp1\"], axis=1)",
+        "detail": "hotb_starter_code.pochodnia",
+        "documentation": {}
+    },
+    {
+        "label": "pochodnia",
+        "kind": 2,
+        "importPath": "hotb_starter_code.pochodnia",
+        "description": "hotb_starter_code.pochodnia",
+        "peekOfCode": "def pochodnia(df):\n    t_df=pd.DataFrame(df[\"time\"])\n    #print(df)\n    df=g.calculate_derivatives_exclude_time(df)\n    df.insert(0, 'time', t_df)\n    df=df[100:]\n    df=sigma3(df)\n    return df\n#print(raw.info)\n# Wyświetl kanały",
+        "detail": "hotb_starter_code.pochodnia",
+        "documentation": {}
+    },
+    {
+        "label": "raw",
+        "kind": 5,
+        "importPath": "hotb_starter_code.readfif",
+        "description": "hotb_starter_code.readfif",
+        "peekOfCode": "raw = mne.io.read_raw_fif(\"unmatrix.fif\", preload=True)\n#print(raw.info)\n# Wyświetl kanały\n#print(raw.ch_names)\n# Obejrzyj dane w interaktywnym viewerze\n# Pobierz dane jako NumPy array\ndata, times = raw.get_data(return_times=True)\ndf=pd.DataFrame(data)\ndf=df.transpose()\n#df=df.drop(columns=[4])",
+        "detail": "hotb_starter_code.readfif",
+        "documentation": {}
+    },
+    {
+        "label": "raw",
+        "kind": 5,
+        "importPath": "hotb_starter_code.sygnal_mne",
+        "description": "hotb_starter_code.sygnal_mne",
+        "peekOfCode": "raw = mne.io.read_raw_fif(\"dura.fif\", preload=True)\nraw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\nraw_filtered = raw_filtered.notch_filter(freqs=[50])\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\n#time.sleep(30)\nplt.show()",
+        "detail": "hotb_starter_code.sygnal_mne",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "hotb_starter_code.sygnal_mne",
+        "description": "hotb_starter_code.sygnal_mne",
+        "peekOfCode": "raw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\nraw_filtered = raw_filtered.notch_filter(freqs=[50])\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\n#time.sleep(30)\nplt.show()",
+        "detail": "hotb_starter_code.sygnal_mne",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "hotb_starter_code.sygnal_mne",
+        "description": "hotb_starter_code.sygnal_mne",
+        "peekOfCode": "raw_filtered = raw_filtered.notch_filter(freqs=[50])\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\n#time.sleep(30)\nplt.show()",
+        "detail": "hotb_starter_code.sygnal_mne",
+        "documentation": {}
+    },
+    {
+        "label": "sk_lvl",
+        "kind": 2,
+        "importPath": "hotb_starter_code.test",
+        "description": "hotb_starter_code.test",
+        "peekOfCode": "def sk_lvl(sec_mne):\n    data, times = sec_mne.get_data(return_times=True)\n    df=pd.DataFrame(data)\n    df=df.transpose()\n    df=df.drop(columns=[4])\n    print(len(df))\n    return len(df)\n# start EEG acquisition setup\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=halo, sfreq=250)",
+        "detail": "hotb_starter_code.test",
         "documentation": {}
     },
     {
@@ -4498,7 +4748,7 @@
         "kind": 5,
         "importPath": "hotb_starter_code.test",
         "description": "hotb_starter_code.test",
-        "peekOfCode": "device_name = \"BA HALO 089 at DESKTOP-3OMH0CD\"\n# start EEG acquisition setup\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=cap, sfreq=250)\n    # Start acquiring data\n    eeg.start_acquisition()\n    print(\"Acquisition started\")\n    time.sleep(3)\n    start_time = time.time()\n    annotation = 1",
+        "peekOfCode": "device_name = \"BA HALO 089\"\ndef sk_lvl(sec_mne):\n    data, times = sec_mne.get_data(return_times=True)\n    df=pd.DataFrame(data)\n    df=df.transpose()\n    df=df.drop(columns=[4])\n    print(len(df))\n    return len(df)\n# start EEG acquisition setup\nwith EEGManager() as mgr:",
         "detail": "hotb_starter_code.test",
         "documentation": {}
     },
@@ -4507,8 +4757,44 @@
         "kind": 5,
         "importPath": "hotb_starter_code.test",
         "description": "hotb_starter_code.test",
-        "peekOfCode": "mne_raw = eeg.data.mne_raw\nprint(f\"MNE Raw object: {mne_raw}\")\n# Access data as NumPy arrays\ndata, times = mne_raw.get_data(return_times=True)\nprint(f\"Data shape: {data.shape}\")\n# save EEG data to MNE fif format\neeg.data.save(f'./data/{time.strftime(\"%Y%m%d_%H%M\")}-raw.fif')\n# Close brainaccess library\neeg.close()\n# conversion to microvolts",
+        "peekOfCode": "mne_raw = eeg.data.mne_raw\nprint(f\"MNE Raw object: {mne_raw}\")\n# Access data as NumPy arrays\ndata, times = mne_raw.get_data(return_times=True)\nprint(f\"Data shape: {data.shape}\")\n# save EEG data to MNE fif format\neeg.data.save(f'unmatrix.fif')\n# Close brainaccess library\neeg.close()\n# conversion to microvolts",
         "detail": "hotb_starter_code.test",
+        "documentation": {}
+    },
+    {
+        "label": "sk_lvl",
+        "kind": 2,
+        "importPath": "hotb_starter_code.test_focus",
+        "description": "hotb_starter_code.test_focus",
+        "peekOfCode": "def sk_lvl(sec_mne):\n    data, times = sec_mne.get_data(return_times=True)\n    df=pd.DataFrame(data)\n    df=df.transpose()\n    df=df.drop(columns=[4])\n    print(len(df))\n    return len(df)\n# start EEG acquisition setup\nwith EEGManager() as mgr:\n    eeg.setup(mgr, device_name=device_name, cap=halo, sfreq=250)",
+        "detail": "hotb_starter_code.test_focus",
+        "documentation": {}
+    },
+    {
+        "label": "eeg",
+        "kind": 5,
+        "importPath": "hotb_starter_code.test_focus",
+        "description": "hotb_starter_code.test_focus",
+        "peekOfCode": "eeg = acquisition.EEG()\n# define electrode locations depending on your device\nhalo: dict = {\n    0: \"Fp1\",\n    1: \"Fp2\",\n    2: \"O1\",\n    3: \"O2\",\n}\ncap: dict = {\n 0: \"F3\",",
+        "detail": "hotb_starter_code.test_focus",
+        "documentation": {}
+    },
+    {
+        "label": "device_name",
+        "kind": 5,
+        "importPath": "hotb_starter_code.test_focus",
+        "description": "hotb_starter_code.test_focus",
+        "peekOfCode": "device_name = \"BA HALO 089\"\ndef sk_lvl(sec_mne):\n    data, times = sec_mne.get_data(return_times=True)\n    df=pd.DataFrame(data)\n    df=df.transpose()\n    df=df.drop(columns=[4])\n    print(len(df))\n    return len(df)\n# start EEG acquisition setup\nwith EEGManager() as mgr:",
+        "detail": "hotb_starter_code.test_focus",
+        "documentation": {}
+    },
+    {
+        "label": "mne_raw",
+        "kind": 5,
+        "importPath": "hotb_starter_code.test_focus",
+        "description": "hotb_starter_code.test_focus",
+        "peekOfCode": "mne_raw = eeg.data.mne_raw\nprint(f\"MNE Raw object: {mne_raw}\")\n# Access data as NumPy arrays\ndata, times = mne_raw.get_data(return_times=True)\nprint(f\"Data shape: {data.shape}\")\n# save EEG data to MNE fif format\neeg.data.save(f'xd.fif')\n# Close brainaccess library\neeg.close()\n# conversion to microvolts",
+        "detail": "hotb_starter_code.test_focus",
         "documentation": {}
     },
     {
@@ -4572,6 +4858,123 @@
         "description": "models",
         "peekOfCode": "class UsersORM(Base):\n    __tablename__ = 'users'\n    'saves user data'\n    id: Mapped[int] = mapped_column(primary_key=True,index=True)\n    email: Mapped[str] = mapped_column(unique=True)\n    password: Mapped[str] = mapped_column()\n    sessions: Mapped[list[\"SessionORM\"]] = relationship(back_populates=\"user\", lazy=\"selectin\")",
         "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "raw",
+        "kind": 5,
+        "importPath": "sygnal_mne",
+        "description": "sygnal_mne",
+        "peekOfCode": "raw = mne.io.read_raw_fif(\"dura.fif\", preload=True)\nraw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\nraw_filtered = raw_filtered.notch_filter(freqs=[50])\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\n#time.sleep(30)\nplt.show()",
+        "detail": "sygnal_mne",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "sygnal_mne",
+        "description": "sygnal_mne",
+        "peekOfCode": "raw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\nraw_filtered = raw_filtered.notch_filter(freqs=[50])\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\n#time.sleep(30)\nplt.show()",
+        "detail": "sygnal_mne",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "sygnal_mne",
+        "description": "sygnal_mne",
+        "peekOfCode": "raw_filtered = raw_filtered.notch_filter(freqs=[50])\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\n#time.sleep(30)\nplt.show()",
+        "detail": "sygnal_mne",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "df = pd.read_csv(\"tiktok.csv\")\nsignal = df[\"value\"].values  # <-- wpisz właściwą nazwę kolumny\nsfreq = 250  # częstotliwość próbkowania (musisz znać!)\ninfo = mne.create_info(ch_names=[\"signal\"], sfreq=sfreq, ch_types=[\"eeg\"])\nraw = mne.io.RawArray(signal[np.newaxis, :], info)\n### 🔹 Usunięcie szumu wysokoczęstotliwościowego (low-pass)\nraw_filtered = raw.copy().filter(l_freq=None, h_freq=40)\n###🔹 Usunięcie składowej stałej (DC offset)\nraw_filtered = raw_filtered.filter(l_freq=1, h_freq=None)\n### 🔹 Bardzo popularny filtr pasmowy EEG",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "signal",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "signal = df[\"value\"].values  # <-- wpisz właściwą nazwę kolumny\nsfreq = 250  # częstotliwość próbkowania (musisz znać!)\ninfo = mne.create_info(ch_names=[\"signal\"], sfreq=sfreq, ch_types=[\"eeg\"])\nraw = mne.io.RawArray(signal[np.newaxis, :], info)\n### 🔹 Usunięcie szumu wysokoczęstotliwościowego (low-pass)\nraw_filtered = raw.copy().filter(l_freq=None, h_freq=40)\n###🔹 Usunięcie składowej stałej (DC offset)\nraw_filtered = raw_filtered.filter(l_freq=1, h_freq=None)\n### 🔹 Bardzo popularny filtr pasmowy EEG\nraw_filtered = raw.copy().filter(l_freq=1, h_freq=40)",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "sfreq",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "sfreq = 250  # częstotliwość próbkowania (musisz znać!)\ninfo = mne.create_info(ch_names=[\"signal\"], sfreq=sfreq, ch_types=[\"eeg\"])\nraw = mne.io.RawArray(signal[np.newaxis, :], info)\n### 🔹 Usunięcie szumu wysokoczęstotliwościowego (low-pass)\nraw_filtered = raw.copy().filter(l_freq=None, h_freq=40)\n###🔹 Usunięcie składowej stałej (DC offset)\nraw_filtered = raw_filtered.filter(l_freq=1, h_freq=None)\n### 🔹 Bardzo popularny filtr pasmowy EEG\nraw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\n#### Usunięcie szumu sieciowego 50 Hz",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "info",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "info = mne.create_info(ch_names=[\"signal\"], sfreq=sfreq, ch_types=[\"eeg\"])\nraw = mne.io.RawArray(signal[np.newaxis, :], info)\n### 🔹 Usunięcie szumu wysokoczęstotliwościowego (low-pass)\nraw_filtered = raw.copy().filter(l_freq=None, h_freq=40)\n###🔹 Usunięcie składowej stałej (DC offset)\nraw_filtered = raw_filtered.filter(l_freq=1, h_freq=None)\n### 🔹 Bardzo popularny filtr pasmowy EEG\nraw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\n#### Usunięcie szumu sieciowego 50 Hz\nraw_filtered = raw.copy().notch_filter(freqs=[50])",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "raw",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "raw = mne.io.RawArray(signal[np.newaxis, :], info)\n### 🔹 Usunięcie szumu wysokoczęstotliwościowego (low-pass)\nraw_filtered = raw.copy().filter(l_freq=None, h_freq=40)\n###🔹 Usunięcie składowej stałej (DC offset)\nraw_filtered = raw_filtered.filter(l_freq=1, h_freq=None)\n### 🔹 Bardzo popularny filtr pasmowy EEG\nraw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\n#### Usunięcie szumu sieciowego 50 Hz\nraw_filtered = raw.copy().notch_filter(freqs=[50])\n###Wyświetlenie sygnału przed i po filtracji",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "raw_filtered = raw.copy().filter(l_freq=None, h_freq=40)\n###🔹 Usunięcie składowej stałej (DC offset)\nraw_filtered = raw_filtered.filter(l_freq=1, h_freq=None)\n### 🔹 Bardzo popularny filtr pasmowy EEG\nraw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\n#### Usunięcie szumu sieciowego 50 Hz\nraw_filtered = raw.copy().notch_filter(freqs=[50])\n###Wyświetlenie sygnału przed i po filtracji\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "raw_filtered = raw_filtered.filter(l_freq=1, h_freq=None)\n### 🔹 Bardzo popularny filtr pasmowy EEG\nraw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\n#### Usunięcie szumu sieciowego 50 Hz\nraw_filtered = raw.copy().notch_filter(freqs=[50])\n###Wyświetlenie sygnału przed i po filtracji\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\nraw_filtered = raw.copy().filter(1, 40).notch_filter(50)",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "raw_filtered = raw.copy().filter(l_freq=1, h_freq=40)\n#### Usunięcie szumu sieciowego 50 Hz\nraw_filtered = raw.copy().notch_filter(freqs=[50])\n###Wyświetlenie sygnału przed i po filtracji\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\nraw_filtered = raw.copy().filter(1, 40).notch_filter(50)",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "raw_filtered = raw.copy().notch_filter(freqs=[50])\n###Wyświetlenie sygnału przed i po filtracji\nraw.plot(title=\"Przed filtracją\")\nraw_filtered.plot(title=\"Po filtracji\")\nraw_filtered = raw.copy().filter(1, 40).notch_filter(50)",
+        "detail": "tempCodeRunnerFile",
+        "documentation": {}
+    },
+    {
+        "label": "raw_filtered",
+        "kind": 5,
+        "importPath": "tempCodeRunnerFile",
+        "description": "tempCodeRunnerFile",
+        "peekOfCode": "raw_filtered = raw.copy().filter(1, 40).notch_filter(50)",
+        "detail": "tempCodeRunnerFile",
         "documentation": {}
     }
 ]
