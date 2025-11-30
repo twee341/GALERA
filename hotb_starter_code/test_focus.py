@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import time
 import pandas as pd
+import seaborn as sb
 
 from brainaccess.utils import acquisition
 from brainaccess.core.eeg_manager import EEGManager
@@ -58,17 +59,25 @@ with EEGManager() as mgr:
     eeg.start_acquisition()
     print("Acquisition started")
     time.sleep(3)
+    foc=pd.DataFrame({"i","foc"})
+    i=0
 
     start_time = time.time()
     annotation = 1
-    while time.time() - start_time < 5:
+    while time.time() - start_time < 60:
         time.sleep(1)
         # send annotation to the device
         print(f"Sending annotation {annotation} to the device")
         eeg.annotate(str(annotation))
         mmm=eeg.get_mne(tim=1)
-        df=g.calculate_focus_index(mmm)
+        df=g.calculate_band_power_mne(mmm)
         f_i=g.calculate_focus_index(df)
+
+        new_row = pd.DataFrame({"i": [i], "foc":[f_i]})
+        foc = pd.concat([foc, new_row], ignore_index=True)
+
+        i+=1
+
         print(f_i)
         annotation += 1
 
@@ -95,7 +104,9 @@ eeg.close()
 # conversion to microvolts
 mne_raw.apply_function(lambda x: x*10**-6)
 # Show recorded data
-mne_raw.filter(1, 40).plot(scalings="auto", verbose=False)
+#mne_raw.filter(1, 40).plot(scalings="auto", verbose=False)
+#plt.show()
+sb.lineplot(foc,x='i',y='foc')
 plt.show()
 
 ''

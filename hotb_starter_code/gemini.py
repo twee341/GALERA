@@ -64,15 +64,50 @@ def calculate_focus_index(df_bands):
         
     focus_index = avg_beta / avg_theta
     return focus_index
+import pandas as pd
+import numpy as np
 
-# PRZYKŁAD UŻYCIA (zakładając, że masz już df_bands z poprzedniego kroku):
+def calculate_derivatives_exclude_time(df, time_col="time"):
+    """
+    Oblicza pochodną (dy/dt) dla zmiennych w DataFrame, pomijając kolumnę czasu w wynikach.
+    
+    Args:
+        df (pd.DataFrame): Dane wejściowe.
+        time_col (str): Nazwa kolumny z czasem (używana do obliczenia dt).
+        
+    Returns:
+        pd.DataFrame: DataFrame zawierający tylko pochodne sygnałów (bez kolumny czasu).
+    """
+    # Sprawdzamy, czy kolumna czasu istnieje
+    if time_col not in df.columns:
+        raise ValueError(f"Kolumna '{time_col}' nie została znaleziona w DataFrame.")
 
-# Użycie
-df_bands = calculate_band_power_mne(mne.io.read_raw_fif("dura.fif", preload=True))
-print(df_bands)
+    # 1. Obliczamy różnicę czasu (dt)
+    dt = df[time_col].diff()
+    dt = dt.replace(0, np.nan) # Zabezpieczenie przed dzieleniem przez zero
+    
+    # 2. Wybieramy kolumny do różniczkowania (wszystkie numeryczne OPRÓCZ czasu)
+    signal_cols = [col for col in df.columns if col != time_col and pd.api.types.is_numeric_dtype(df[col])]
+    
+    # 3. Obliczamy pochodne tylko dla wybranych kolumn
+    deriv_df = pd.DataFrame(index=df.index)
+    
+    for col in signal_cols:
+        dy = df[col].diff()
+        # Pochodna = zmiana sygnału / zmiana czasu
+        deriv_df[f"{col}_deriv"] = dy / dt
 
-# Wizualizacja
-df_melted = df_bands.melt(id_vars="Channel", var_name="Band", value_name="Power")
-sb.barplot(data=df_melted, x="Channel", y="Power", hue="Band")
-plt.title("Moc pasm EEG na kanał")
-plt.show()
+    return deriv_df
+
+# --- PRZYKŁAD UŻYCIA ---
+# Przykładowe dane
+
+if __name__=="__main__":
+    df_bands = calculate_band_power_mne(mne.io.read_raw_fif("dura.fif", preload=True))
+    print(df_bands)
+
+    # Wizualizacja
+    df_melted = df_bands.melt(id_vars="Channel", var_name="Band", value_name="Power")
+    sb.barplot(data=df_melted, x="Channel", y="Power", hue="Band")
+    plt.title("Moc pasm EEG na kanał")
+    plt.show()

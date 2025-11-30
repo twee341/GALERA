@@ -5,7 +5,7 @@ import time
 import mne
 import seaborn as sb
 
-raw = mne.io.read_raw_fif("dura.fif", preload=True)
+raw = mne.io.read_raw_fif("unmatrix.fif", preload=True)
 #print(raw.info)
 
 # Wyświetl kanały
@@ -18,5 +18,5 @@ data, times = raw.get_data(return_times=True)
 df=pd.DataFrame(data)
 df=df.transpose()
 #df=df.drop(columns=[4])
-sb.lineplot(df,x=4,y=3)
+sb.lineplot(df,x=4,y=2)
 plt.show()

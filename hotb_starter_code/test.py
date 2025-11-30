@@ -14,7 +14,6 @@ import pandas as pd
 
 from brainaccess.utils import acquisition
 from brainaccess.core.eeg_manager import EEGManager
-import gemini as g
 
 matplotlib.use("TKAgg", force=True)
 
@@ -86,7 +85,7 @@ data, times = mne_raw.get_data(return_times=True)
 print(f"Data shape: {data.shape}")
 
 # save EEG data to MNE fif format
-eeg.data.save(f'uncondura.fif')
+eeg.data.save(f'unmatrix.fif')
 # Close brainaccess library
 eeg.close()
 # conversion to microvolts
