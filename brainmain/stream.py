@@ -7,16 +7,19 @@ using acquisition class from brainaccess.utils
 Change Bluetooth device name
 """
 
+import datetime
 import matplotlib.pyplot as plt
 import matplotlib
 import time
 import pandas as pd
 import numpy as np
+import requests
 from brainaccess.utils import acquisition
 from brainaccess.core.eeg_manager import EEGManager
 import json
 import galerabrainlib as g
 
+from config import *
 
 
 
@@ -39,11 +42,11 @@ cap: dict = {
  7: "O2",
 }
 
-if __name__=="__main__":
-    activate=True
+def run_eeg_acquisition(timme=5):
     matplotlib.use("TKAgg", force=True)
     eeg = acquisition.EEG()
     device_name = "BA HALO 089"
+    global activate
     with EEGManager() as mgr:
 
         eeg.setup(mgr, device_name=device_name, cap=halo, sfreq=250)
@@ -53,12 +56,13 @@ if __name__=="__main__":
         foc=pd.DataFrame({"i","foc"})
         i=0
 
-        start_time = time.time()
+        start_time = datetime.datetime.now()
+
         annotation = 1
         print("Starting in 5 seconds")
         time.sleep(5)
         #while time.time() - start_time < 10:
-        while activate:
+        while activate and (datetime.datetime.now() - start_time).seconds < timme*60:
             time.sleep(1)
 
             eeg.annotate(str(annotation))
@@ -73,7 +77,9 @@ if __name__=="__main__":
             #print(f_i)
             to_send = {"actual_focus": f_i}
             json_focus = json.dumps(to_send)
+            response = requests.post("http://127.0.0.1:8000/send_stats", json=json_focus)
 
+        
             #here send json_focus to database !!!
 
             annotation += 1
@@ -84,7 +90,6 @@ if __name__=="__main__":
 
         #print("Preparing to plot data")
         time.sleep(1)
-
         eeg.get_mne()
         eeg.stop_acquisition()
         mgr.disconnect()
@@ -106,7 +111,7 @@ if __name__=="__main__":
 
     to_send = {"avg": final_avg,"max": final_max}
     json_avgmax = json.dumps(to_send)
-
+    response = requests.post("http://127.0.0.1:8000/send_stats", json=json_focus)
     #here send json_avgmax to database !!!
 
     """ Use to graphical display
