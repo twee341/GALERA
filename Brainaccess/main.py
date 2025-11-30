@@ -14,6 +14,7 @@ import pandas as pd
 import numpy as np
 from brainaccess.utils import acquisition
 from brainaccess.core.eeg_manager import EEGManager
+import json
 import galerabrainlib as g
 
 
@@ -69,10 +70,15 @@ if __name__=="__main__":
 
             i+=1
 
-            print(f_i)
+            #print(f_i)
+            to_send = {"actual_focus": f_i}
+            json_focus = json.dumps(to_send)
+
+            #here send json_focus to database !!!
+
             annotation += 1
             """
-            if ___ :
+            if ___ : !!!
                 activate=False
             """
 
@@ -95,8 +101,13 @@ if __name__=="__main__":
 
     #print("avg",foc["foc"].mean(),"max",foc["foc"].max())
 
-    #final_avg=foc["foc"].mean()
-    #final_max=foc["foc"].max()
+    final_avg=(foc["foc"].mean()*10)/10
+    final_max=foc["foc"].max()
+
+    to_send = {"avg": final_avg,"max": final_max}
+    json_avgmax = json.dumps(to_send)
+
+    #here send json_avgmax to database !!!
 
     """ Use to graphical display
     mne_raw.apply_function(lambda x: x*10**-6)
